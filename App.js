@@ -1,10 +1,16 @@
 
-import { Fragment, useEffect } from 'react';
-import { View,TextInput } from 'react-native';
+import { Fragment } from 'react';
+import { View} from 'react-native';
 import React, { useState } from 'react';
 import ListStudents from './src/components/ListStudents';
 import dummyData from './dummydata';
 import ModalDelete from './src/components/ModalDelete';
+import useValidation from './src/hooks/useValidation';
+import { validations } from './src/constants/validations';
+import { inputTypes } from './src/constants/inputTypes';
+import  InputPicker  from './src/components/InputPicker';
+
+
 
 const studentsArray = dummyData
 
@@ -14,7 +20,7 @@ const studentsArray = dummyData
   const [filteredStudents, setFilteredStudents] = useState(students)
   const [studentToDelete, setStudentToDelete] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
-  
+
   function searchStudents(search) {
     const newStudents = students.filter(student => {
       return student.firstName.toLowerCase().includes(search) ||
@@ -24,11 +30,8 @@ const studentsArray = dummyData
     })
     setFilteredStudents(newStudents)
   } 
-  
-  useEffect(() => {
-    const searchLowerCase = search.toLowerCase()
-    searchStudents(searchLowerCase)
-  }, [search])
+  const {error} = useValidation(searchStudents, search, validations.onlyLetters)
+
 
   const onModalHandler = (student) => {
     setStudentToDelete(student)
@@ -53,11 +56,14 @@ const studentsArray = dummyData
           setModalVisible = {setModalVisible}
           onDelete={onDelete}
           />}
-      <TextInput
-          className='border-2 border-gray-100 rounded-md h-10 w-full px-2'
-          placeholder='Search'
-          value={search}
-          onChangeText={setSearch}/>
+      <InputPicker
+        input = {{ 
+          onChange : setSearch,
+          value : search,
+          error : error,
+          type : inputTypes.search,
+        }}
+      />
         {students && 
         <ListStudents
           students={filteredStudents.sort((a, b) => a.lastName.localeCompare(b.lastName))}
