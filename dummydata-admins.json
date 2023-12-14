@@ -1,0 +1,20 @@
+[
+  {
+    "id": { "$oid": "64553d597bd516fac07b697a" },
+    "firstName": "Lucas",
+    "lastName": "Garcia",
+    "password" : "hello1234"
+  },
+  {
+    "id": { "$oid": "64553d597bd516fac07b697b" },
+    "firstName": "John",
+    "lastName": "Doe",
+    "password" : "kiwi1234"
+  }
+]
+
+
+
+
+  
+  

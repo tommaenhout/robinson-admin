@@ -1,76 +1,45 @@
 
 import { Fragment } from 'react';
-import { View} from 'react-native';
-import React, { useState } from 'react';
-import ListStudents from './src/components/ListStudents';
-import dummyData from './dummydata';
-import ModalDelete from './src/components/ModalDelete';
-import useValidation from './src/hooks/useValidation';
-import { validations } from './src/constants/validations';
-import { inputTypes } from './src/constants/inputTypes';
-import  InputPicker  from './src/components/InputPicker';
+import React from 'react';
+import {useFonts} from 'expo-font';
+import StudentScreen from './src/screens/StudentScreen';
+import AdminScreen from './src/screens/AdminScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import CustomButton from './src/components/CustomButton';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
+const Stack = createStackNavigator();
 
-
-const studentsArray = dummyData
 
  const App = () => {
-  const [search, setSearch] = useState('')
-  const [students, setStudents] = useState(studentsArray)
-  const [filteredStudents, setFilteredStudents] = useState(students)
-  const [studentToDelete, setStudentToDelete] = useState(null)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [loaded] = useFonts({
+    'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
+    'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+    'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
+    'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
+    'Roboto-Thin': require('./assets/fonts/Roboto-Thin.ttf'),
+    'Roboto-Black': require('./assets/fonts/Roboto-Black.ttf'),
+    'Roboto-Italic': require('./assets/fonts/Roboto-Italic.ttf'),
+    'Roboto-LightItalic': require('./assets/fonts/Roboto-LightItalic.ttf'),
+    'Roboto-MediumItalic': require('./assets/fonts/Roboto-MediumItalic.ttf'),
+    'Roboto-BoldItalic': require('./assets/fonts/Roboto-BoldItalic.ttf'),
+    'Roboto-BlackItalic': require('./assets/fonts/Roboto-BlackItalic.ttf'),
+    'Rubik-Bubbles': require('./assets/fonts/RubikBubbles-Regular.ttf'),
+  });
 
-  function searchStudents(search) {
-    const newStudents = students.filter(student => {
-      return student.firstName.toLowerCase().includes(search) ||
-      student.lastName.toLowerCase().includes(search) ||
-      student.language.toLowerCase().includes(search) ||
-      student.level.toLowerCase().includes(search)
-    })
-    setFilteredStudents(newStudents)
-  } 
-  const {error} = useValidation(searchStudents, search, validations.onlyLetters)
+  if (!loaded) return null;
 
-
-  const onModalHandler = (student) => {
-    setStudentToDelete(student)
-    setModalVisible(true)
-  }
-
-  const onDelete = (id) => {
-    const newStudents = students.filter(student => student.id.$oid !== id.$oid)
-    setStudents(newStudents)
-    setFilteredStudents(newStudents)
-    setStudentToDelete(null)
-    setModalVisible(false)
-  }
+  
 
   return (
-    <Fragment>
-      <View className="mt-8 h-screen p-1">
-      {studentToDelete &&
-      <ModalDelete
-          student = {studentToDelete}
-          visible= {studentToDelete && modalVisible}
-          setModalVisible = {setModalVisible}
-          onDelete={onDelete}
-          />}
-      <InputPicker
-        input = {{ 
-          onChange : setSearch,
-          value : search,
-          error : error,
-          type : inputTypes.search,
-        }}
-      />
-        {students && 
-        <ListStudents
-          students={filteredStudents.sort((a, b) => a.lastName.localeCompare(b.lastName))}
-          onModal={onModalHandler}
-        />}
-      </View>
-    </Fragment>
+   <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Admins" component={AdminScreen} />
+      <Stack.Screen name="Students" component={StudentScreen} />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 

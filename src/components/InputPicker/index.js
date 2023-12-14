@@ -1,6 +1,7 @@
 
 import { inputTypes } from "../../constants/inputTypes";
 import SearchInput from "../SearchInput";
+import CustomInput from "../CustomInput";
 
 // component that picks an input type
 
@@ -14,7 +15,9 @@ const InputPicker = ({ input }) => {
         );
       case inputTypes.text:
         return (
-          <CustomInput/>
+          <CustomInput 
+          input = {input}
+          />
         );
       default:
         return null;
