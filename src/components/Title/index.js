@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View} from 'react-native';
 
 
 const Title = ({ children }) => {
     return (
-        <Text className="text-center text-base font-light">{children}</Text>
+            <Text className="text-base text-center font-light">{children}</Text>
     )
 }
 

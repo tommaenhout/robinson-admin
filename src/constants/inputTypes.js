@@ -1,4 +1,5 @@
 export const inputTypes = {
     search: 'search',
-    text: 'text'
+    text: 'text',
+    number : 'number'
 }

@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import CustomButton from '../../components/CustomButton';
+import ScreenWrapper from '../../components/ScreenWrapper';
 
 
 const HomeScreen = ({navigation,route}) => {  
     return (
-        <View>
+        <ScreenWrapper>
             <CustomButton title="Go to Admins" onPress={() => navigation.navigate('Admins')} />
             <CustomButton title="Go to Students" onPress={() => navigation.navigate('Students')} />
-        </View>
+            <CustomButton title="Go to Prices" onPress={() => navigation.navigate('Prices')} />
+        </ScreenWrapper>
     );
     
 }

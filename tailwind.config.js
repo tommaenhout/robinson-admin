@@ -16,7 +16,7 @@ module.exports = {
         'normal': "Roboto-Regular",
         'medium': "Roboto-Medium",
         'bold': "Roboto-Bold",
-         "black": "Roboto-Black",
+        "black": "Roboto-Black",
       },
     },
   },

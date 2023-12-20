@@ -7,6 +7,7 @@ import useValidation from '../../hooks/useValidation';
 import { validations } from '../../constants/validations';
 import { inputTypes } from '../../constants/inputTypes';
 import InputPicker from '../../components/InputPicker';
+import ScreenWrapper from '../../components/ScreenWrapper';
 
 const studentsArray = require('../../../dummydata-students.json')
 
@@ -45,8 +46,8 @@ const studentsArray = require('../../../dummydata-students.json')
   }
 
   return (
-    <Fragment>
-      <View className="mt-8 h-screen p-1 ">
+    <ScreenWrapper>
+      <View className="h-screen px-1">
       {studentToDelete &&
       <ModalDelete
           student = {studentToDelete}
@@ -68,7 +69,7 @@ const studentsArray = require('../../../dummydata-students.json')
           onModal={onModalHandler}
         />}
       </View>
-    </Fragment>
+    </ScreenWrapper>
   );
 }
 

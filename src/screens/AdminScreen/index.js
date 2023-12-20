@@ -10,10 +10,11 @@ import ListAdmins from '../../components/ListAdmins';
 import ModalAddAdmin from '../../components/ModalAddAdmin';
 import uuid from 'react-native-uuid';
 import { useEffect } from 'react';
+import ScreenWrapper from '../../components/ScreenWrapper';
 
 const adminsArray = dummyData
 
- const AdminScreen = () => {
+ const AdminScreen = ({navigation}) => {
   const [search, setSearch] = useState('')
   const [admins, setAdmins] = useState(adminsArray)
   const [filteredAdmins, setFilteredAdmins] = useState(adminsArray)
@@ -55,7 +56,6 @@ const adminsArray = dummyData
         $oid : uuid.v4()
       }
     }
-    console.log(newAdmin)
     setAdmins([
       ...admins,
       newAdmin
@@ -87,9 +87,8 @@ const adminsArray = dummyData
   
 
   return (
-    <Fragment>
-      <View className="mt-8 h-screen p-1 ">
-     
+    <ScreenWrapper>
+      <View className="h-screen px-1">
       <ModalAddAdmin
           addNewAdmin={addNewAdmin}
           visible= {modalVisible}
@@ -97,22 +96,24 @@ const adminsArray = dummyData
           onAdd={setAdminToAdd}
           inputs={inputs && inputs}
           />
-      <InputPicker
-        input = {{ 
-          onChange : setSearch,
-          value : search,
-          error : error,
-          type : inputTypes.search,
-        }}
-      />
-
+      <View>
+          <InputPicker
+          input = {{ 
+            onChange : setSearch,
+            value : search,
+            error : error,
+            type : inputTypes.search,
+          }}
+          />
+      </View>
+      
         {admins && 
         <ListAdmins
           admins={filteredAdmins.sort((a, b) => a.lastName.localeCompare(b.lastName))}
           onModal={onModalHandler}
         />}
       </View>
-    </Fragment>
+    </ScreenWrapper>
   );
 }
 

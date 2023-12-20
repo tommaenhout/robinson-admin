@@ -1,15 +1,9 @@
 
-import { Fragment } from 'react';
 import React from 'react';
 import {useFonts} from 'expo-font';
-import StudentScreen from './src/screens/StudentScreen';
-import AdminScreen from './src/screens/AdminScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import CustomButton from './src/components/CustomButton';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './src/components/Navigator';
+import { StatusBar } from 'expo-status-bar';
 
-const Stack = createStackNavigator();
 
 
  const App = () => {
@@ -30,16 +24,11 @@ const Stack = createStackNavigator();
 
   if (!loaded) return null;
 
-  
-
   return (
-   <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Admins" component={AdminScreen} />
-      <Stack.Screen name="Students" component={StudentScreen} />
-    </Stack.Navigator>
-  </NavigationContainer>
+    <>
+      <StatusBar/>
+      <Navigator/>
+   </>
   );
 }
 
