@@ -7,12 +7,9 @@ import { StatusBar } from "expo-status-bar";
 const ScreenWrapper = ({ children }) => {
     return (
         <View className="bg-white h-screen">  
-       
-        <SafeAreaView>
-                {children}
-        </SafeAreaView>
-     
-           
+            <SafeAreaView>
+                    {children}
+            </SafeAreaView>
         </View>
     );
     }
