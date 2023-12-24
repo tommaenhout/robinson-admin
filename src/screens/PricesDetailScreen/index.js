@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import Title from '../../components/Title';
-import { Text, View } from 'react-native';
+import { KeyboardAvoidingView, Text, View } from 'react-native';
 import InputPicker from '../../components/InputPicker';
 import CustomButton from '../../components/CustomButton';
 import { useState } from 'react';
@@ -75,19 +75,22 @@ const PricesDetailScreen = ({ navigation, route }) => {
             <View>
                 <Title>{`${type} ${!isGroup ? "indvidual" : "group"}`} </Title>
             </View>
+        
+            <KeyboardAvoidingView>
+                <View className="p-2">
+                    {inputs.map((input, index) => (
+                        <InputPicker
+                            key={index}
+                            input = {input}
+                        />
+                    ))}
+                </View>
+            </KeyboardAvoidingView>
             <View className="p-2">
                 <Text>Price ID: {id.$oid}</Text>
                 <Text>Hours per week: {hours_per_week}</Text>
                 <Text>Classes per week: {classes_per_week}</Text>
                 <Text>Duration: {duration}</Text>
-            </View>
-            <View className="p-2">
-                {inputs.map((input, index) => (
-                    <InputPicker
-                        key={index}
-                        input = {input}
-                    />
-                ))}
             </View>
         </View>  
         <CustomButton title="Save" onPress={editPrice}/> 
