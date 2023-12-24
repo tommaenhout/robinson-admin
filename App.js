@@ -3,6 +3,8 @@ import React from 'react';
 import {useFonts} from 'expo-font';
 import Navigator from './src/components/Navigator';
 import { StatusBar } from 'expo-status-bar';
+import store from './src/app/store';
+import { Provider } from 'react-redux'
 
 
 
@@ -27,7 +29,9 @@ import { StatusBar } from 'expo-status-bar';
   return (
     <>
       <StatusBar/>
-      <Navigator/>
+      <Provider store={store}>
+        <Navigator/>
+      </Provider>
    </>
   );
 }

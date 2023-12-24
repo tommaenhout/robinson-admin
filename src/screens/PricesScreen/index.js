@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import dummyData from '../../../dummydata-prices.json'
 import PricesCollection from '../../components/PricesCollection';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPrices,setPricesGroup, setPricesIndividual } from '../../features/pricesSlice';
 import { useEffect } from 'react';
 
 const pricesArray = dummyData
 
 const PricesScreen = ({navigation, route}) => {
-    const [pricesIndividual, setPricesIndividual] = useState([])
-    const [pricesGroup, setPricesGroup] = useState([])
+    const prices = useSelector((state) => state.prices.prices)
+    const pricesIndividual = useSelector((state) => state.prices.pricesIndividual)
+    const pricesGroup = useSelector((state) => state.prices.pricesGroup)
+    const dispatch = useDispatch()
 
     useEffect (() => {
-        setPrices()
-    }, [pricesArray])
+        if (prices.length >  0) {
+            dispatch(setPricesIndividual())
+            dispatch(setPricesGroup())
+        }
+    }, [prices])
 
-    const setPrices = () => {
-        const pricesIndividual = pricesArray.filter(price => price.isGroup === false)
-        const pricesGroup = pricesArray.filter(price => price.isGroup === true)
-
-        setPricesIndividual(pricesIndividual)
-        setPricesGroup(pricesGroup)
-    }
+    useEffect (() => {
+        dispatch(setPrices(pricesArray))
+    }, [])
 
     return (
         <ScreenWrapper>

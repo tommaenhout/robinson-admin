@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Modal, View} from 'react-native';
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import dummyData from '../../../dummydata-admins.json'
 import useValidation from '../../hooks/useValidation';
 import { validations } from '../../constants/validations';
@@ -11,14 +11,19 @@ import ModalAddAdmin from '../../components/ModalAddAdmin';
 import uuid from 'react-native-uuid';
 import { useEffect } from 'react';
 import ScreenWrapper from '../../components/ScreenWrapper';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAdmins, setFilteredAdmins } from '../../features/adminsSlice';
 
 const adminsArray = dummyData
 
  const AdminScreen = ({navigation}) => {
+  const admins = useSelector((state) => state.admins.admins)
+  const filteredAdmins = useSelector((state) => state.admins.filteredAdmins)
   const [search, setSearch] = useState('')
-  const [admins, setAdmins] = useState(adminsArray)
-  const [filteredAdmins, setFilteredAdmins] = useState(adminsArray)
+/*   const [admins, setAdmins] = useState(adminsArray) */
+ /*  const [filteredAdmins, setFilteredAdmins] = useState(adminsArray) */
   const [modalVisible, setModalVisible] = useState(false)
+  const dispatch = useDispatch()
   const [adminToAdd, setAdminToAdd] = useState(
     {
       id : {
@@ -28,13 +33,19 @@ const adminsArray = dummyData
       lastName : '',
     }
   )
+  useEffect (() => {
+    dispatch(setAdmins(adminsArray))
+  }, [])
+
+  useEffect (() => {
+    if (admins.length >  0) {
+      dispatch(setFilteredAdmins(""))
+    }
+    }, [admins])
+
  
   function searchAdmins(search) {
-    const newAdmins = admins.filter(admin => {
-      return admin.firstName.toLowerCase().includes(search) ||
-      admin.lastName.toLowerCase().includes(search) 
-    })
-    setFilteredAdmins(newAdmins)
+    dispatch(setFilteredAdmins(search))
   } 
   const {error} = useValidation(searchAdmins, search, validations.onlyLetters)
    
@@ -63,9 +74,9 @@ const adminsArray = dummyData
     setModalVisible(false)
   }
 
-  useEffect (() => {
+/*   useEffect (() => {
     setFilteredAdmins(admins)
-  }, [admins])
+  }, [admins]) */
 
 
   const inputs = [
