@@ -112,6 +112,82 @@
     "amountMonths": "3 months",
     "createdAt": { "$date": { "$numberLong": 1683307865891 } },
     "_v": { "$numberInt": 3 }
+  },
+  {
+    "id": { "$oid": "64553d597bd516fac7b697c" },
+    "firstName": "Sofia",
+    "lastName": "Moretti",
+    "email": "sofia@example.com",
+    "language": "Italian",
+    "level": "Beginner",
+    "objective": "Basic Conversation",
+    "phone": "01155555555",
+    "exam": "None",
+    "timeZone": {
+      "value": "Europe/Madrid",
+      "label": "(GMT+1:00) Madrid, Barcelona",
+      "offset": { "$numberInt": 1 },
+      "abbrev": "Europe/Madrid",
+      "altName": "Europe/Madrid"
+    },
+    "argentineTime": [
+      { "day": "Monday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Tuesday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Wednesday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Thursday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Friday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } }
+    ],
+    "localTime": [
+      { "day": "Monday", "hour": "12", "minute": "30" },
+      { "day": "Tuesday", "hour": "12", "minute": "30" },
+      { "day": "Wednesday", "hour": "12", "minute": "30" },
+      { "day": "Thursday", "hour": "12", "minute": "30" },
+      { "day": "Friday", "hour": "12", "minute": "30" }
+    ],
+    "wantsGroup": true,
+    "pricePack": "Starter",
+    "price": "EUR €40.00",
+    "amountMonths": "3 months",
+    "createdAt": { "$date": { "$numberLong": 1683307865891 } },
+    "_v": { "$numberInt": 3 }
+  },
+  {
+    "id": { "$oid": "64553597bd516fac07b697c" },
+    "firstName": "Sofia",
+    "lastName": "Moretti",
+    "email": "sofia@example.com",
+    "language": "Italian",
+    "level": "Beginner",
+    "objective": "Basic Conversation",
+    "phone": "01155555555",
+    "exam": "None",
+    "timeZone": {
+      "value": "Europe/Madrid",
+      "label": "(GMT+1:00) Madrid, Barcelona",
+      "offset": { "$numberInt": 1 },
+      "abbrev": "Europe/Madrid",
+      "altName": "Europe/Madrid"
+    },
+    "argentineTime": [
+      { "day": "Monday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Tuesday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Wednesday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Thursday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } },
+      { "day": "Friday", "hour": { "$numberInt": 12 }, "minute": { "$numberInt": 30 } }
+    ],
+    "localTime": [
+      { "day": "Monday", "hour": "12", "minute": "30" },
+      { "day": "Tuesday", "hour": "12", "minute": "30" },
+      { "day": "Wednesday", "hour": "12", "minute": "30" },
+      { "day": "Thursday", "hour": "12", "minute": "30" },
+      { "day": "Friday", "hour": "12", "minute": "30" }
+    ],
+    "wantsGroup": true,
+    "pricePack": "Starter",
+    "price": "EUR €40.00",
+    "amountMonths": "3 months",
+    "createdAt": { "$date": { "$numberLong": 1683307865891 } },
+    "_v": { "$numberInt": 3 }
   }
 ]
 

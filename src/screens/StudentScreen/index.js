@@ -8,6 +8,7 @@ import { validations } from '../../constants/validations';
 import { inputTypes } from '../../constants/inputTypes';
 import InputPicker from '../../components/InputPicker';
 import ScreenWrapper from '../../components/ScreenWrapper';
+import ListWrapper from '../../components/ListWrapper';
 
 const studentsArray = require('../../../dummydata-students.json')
 
@@ -63,11 +64,13 @@ const studentsArray = require('../../../dummydata-students.json')
           type : inputTypes.search,
         }}
       />
+      <ListWrapper>
         {students && 
-        <ListStudents
-          students={filteredStudents.sort((a, b) => a.lastName.localeCompare(b.lastName))}
-          onModal={onModalHandler}
-        />}
+          <ListStudents
+            students={filteredStudents.sort((a, b) => a.lastName.localeCompare(b.lastName))}
+            onModal={onModalHandler}
+          />}
+      </ListWrapper>
       </View>
     </ScreenWrapper>
   );

@@ -12,7 +12,9 @@ import uuid from 'react-native-uuid';
 import { useEffect } from 'react';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAdmins, setFilteredAdmins } from '../../features/adminsSlice';
+import { setAdmins, setFilteredAdmins, addAdmin } from '../../features/adminsSlice';
+import CustomButton from '../../components/CustomButton';
+import ListWrapper from '../../components/ListWrapper';
 
 const adminsArray = dummyData
 
@@ -67,16 +69,10 @@ const adminsArray = dummyData
         $oid : uuid.v4()
       }
     }
-    setAdmins([
-      ...admins,
-      newAdmin
-    ])
+    dispatch(addAdmin(newAdmin))
     setModalVisible(false)
   }
 
-/*   useEffect (() => {
-    setFilteredAdmins(admins)
-  }, [admins]) */
 
 
   const inputs = [
@@ -117,12 +113,16 @@ const adminsArray = dummyData
           }}
           />
       </View>
-      
-        {admins && 
+      <ListWrapper isAdmin>
+        {filteredAdmins && 
         <ListAdmins
-          admins={filteredAdmins.sort((a, b) => a.lastName.localeCompare(b.lastName))}
+          admins={filteredAdmins}
           onModal={onModalHandler}
         />}
+      </ListWrapper>
+        <View className="pb-3">
+            <CustomButton title="Add Admin" onPress={onModalHandler} />
+        </View>
       </View>
     </ScreenWrapper>
   );

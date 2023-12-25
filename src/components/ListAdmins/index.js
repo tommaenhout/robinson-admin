@@ -2,21 +2,22 @@ import { useEffect } from "react"
 import AdminListItem from "./AdminListItem"
 import { FlatList, View } from "react-native"
 import CustomButton from "../CustomButton"
+import { useSelector } from "react-redux"
 
 
 
-const ListAdmins = ({admins, onModal}) => {   
+const ListAdmins = ({onModal}) => { 
+    const admins = useSelector((state) => state.admins.filteredAdmins)  
     return (
-        <View>
+       
+        <>
             <FlatList
                 data={admins}
-                keyExtractor={(item) => item.id.$oid}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => <AdminListItem admin={item} onModal={onModal} />}
             />
-            <View className="pb-3">
-                <CustomButton title="Add Admin" onPress={onModal} />
-           </View>
-    </View>
+        </>
+
     )
 }
 export default ListAdmins
