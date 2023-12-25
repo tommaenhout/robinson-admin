@@ -1,9 +1,7 @@
 import { Fragment } from 'react';
-import { Modal, View} from 'react-native';
+import {View} from 'react-native';
 import React, { useState} from 'react';
 import dummyData from '../../../dummydata-admins.json'
-import useValidation from '../../hooks/useValidation';
-import { validations } from '../../constants/validations';
 import { inputTypes } from '../../constants/inputTypes';
 import InputPicker from '../../components/InputPicker';
 import ListAdmins from '../../components/ListAdmins';
@@ -15,15 +13,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setAdmins, setFilteredAdmins, addAdmin } from '../../features/adminsSlice';
 import CustomButton from '../../components/CustomButton';
 import ListWrapper from '../../components/ListWrapper';
+import useValidation from '../../hooks/useValidation';
+import { validations } from '../../constants/validations';
+
 
 const adminsArray = dummyData
 
- const AdminScreen = ({navigation}) => {
+ const AdminScreen = () => {
   const admins = useSelector((state) => state.admins.admins)
   const filteredAdmins = useSelector((state) => state.admins.filteredAdmins)
   const [search, setSearch] = useState('')
-/*   const [admins, setAdmins] = useState(adminsArray) */
- /*  const [filteredAdmins, setFilteredAdmins] = useState(adminsArray) */
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const dispatch = useDispatch()
   const [adminToAdd, setAdminToAdd] = useState(
@@ -33,6 +33,7 @@ const adminsArray = dummyData
       },
       firstName : '',
       lastName : '',
+      password : '',
     }
   )
   useEffect (() => {
@@ -50,12 +51,15 @@ const adminsArray = dummyData
     dispatch(setFilteredAdmins(search))
   } 
   const {error} = useValidation(searchAdmins, search, validations.onlyLetters)
+
+
    
-  function onModalHandler(admin) {
+  function onModalHandler() {
      setModalVisible (true)
   }
 
   function onChangeHandler (name, value) {
+     console.log(adminToAdd)
      setAdminToAdd({
         ...adminToAdd,
         [name] : value
@@ -73,6 +77,9 @@ const adminsArray = dummyData
     setModalVisible(false)
   }
 
+  function onConfirmPasswordHandler (name, value) {
+    setConfirmPassword(value)
+  }
 
 
   const inputs = [
@@ -90,9 +97,24 @@ const adminsArray = dummyData
       type : inputTypes.text,
       placeholder : 'Last Name',
     },
+    {
+      onChange : onChangeHandler,
+      value : adminToAdd.password,
+      name: 'password',
+      type : inputTypes.password,
+      placeholder : 'Password',
+   
+    },
+    {
+      onChange : onConfirmPasswordHandler,
+      value : confirmPassword,
+      name: 'confirmPassword',
+      type : inputTypes.password,
+      placeholder : 'Confirm Password',
+    
+    },
   ]
   
-
   return (
     <ScreenWrapper>
       <View className="h-screen px-1">
@@ -121,7 +143,7 @@ const adminsArray = dummyData
         />}
       </ListWrapper>
         <View className="pb-3">
-            <CustomButton title="Add Admin" onPress={onModalHandler} />
+            <CustomButton  title="Add Admin" onPress={onModalHandler} />
         </View>
       </View>
     </ScreenWrapper>

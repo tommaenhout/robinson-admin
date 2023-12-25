@@ -5,6 +5,6 @@ import adminsSlice from '../../features/adminsSlice'
 export default configureStore({
   reducer: {
     prices: pricesSlice,
-    admins: adminsSlice
+    admins: adminsSlice,
   },
 })
