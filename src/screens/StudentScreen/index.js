@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { View} from 'react-native';
 import React, { useState } from 'react';
 import ListStudents from '../../components/ListStudents';
@@ -9,28 +9,26 @@ import { inputTypes } from '../../constants/inputTypes';
 import InputPicker from '../../components/InputPicker';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import ListWrapper from '../../components/ListWrapper';
+import { useSelector, useDispatch } from 'react-redux';
+import { setStudents, setFilteredStudents, deleteStudent } from '../../features/studentsSlice';
 
 const studentsArray = require('../../../dummydata-students.json')
 
  const StudentScreen = () => {
   const [search, setSearch] = useState('')
-  const [students, setStudents] = useState(studentsArray)
-  const [filteredStudents, setFilteredStudents] = useState(students)
+  const dispatch = useDispatch()
+  const students = useSelector((state) => state.students.students)
+  const filteredStudents = useSelector((state) => state.students.filteredStudents)
+  /* const [students, setStudents] = useState(studentsArray)
+  const [filteredStudents, setFilteredStudents] = useState(students) */
   const [studentToDelete, setStudentToDelete] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   
 
   function searchStudents(search) {
-    const newStudents = students.filter(student => {
-      return student.firstName.toLowerCase().includes(search) ||
-      student.lastName.toLowerCase().includes(search) ||
-      student.language.toLowerCase().includes(search) ||
-      student.level.toLowerCase().includes(search)
-    })
-    setFilteredStudents(newStudents)
+    dispatch(setFilteredStudents(search))
   } 
   const {error} = useValidation(searchStudents, search, validations.onlyLetters)
-
 
   
   const onModalHandler = (student) => {
@@ -39,12 +37,19 @@ const studentsArray = require('../../../dummydata-students.json')
   }
 
   const onDelete = (id) => {
-    const newStudents = students.filter(student => student.id.$oid !== id.$oid)
-    setStudents(newStudents)
-    setFilteredStudents(newStudents)
+    dispatch(deleteStudent(id))
     setStudentToDelete(null)
     setModalVisible(false)
   }
+  useEffect (() => {
+    dispatch(setStudents(studentsArray))
+  }, [])
+
+  useEffect (() => {
+    if (students.length >  0) {
+      dispatch(setFilteredStudents(""))
+    }
+    }, [students])
 
   return (
     <ScreenWrapper>

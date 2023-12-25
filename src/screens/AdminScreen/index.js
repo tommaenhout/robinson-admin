@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import {View} from 'react-native';
 import React, { useState} from 'react';
 import dummyData from '../../../dummydata-admins.json'
@@ -59,7 +58,6 @@ const adminsArray = dummyData
   }
 
   function onChangeHandler (name, value) {
-     console.log(adminToAdd)
      setAdminToAdd({
         ...adminToAdd,
         [name] : value
@@ -111,7 +109,6 @@ const adminsArray = dummyData
       name: 'confirmPassword',
       type : inputTypes.password,
       placeholder : 'Confirm Password',
-    
     },
   ]
   
