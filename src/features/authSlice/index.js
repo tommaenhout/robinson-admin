@@ -19,7 +19,7 @@ export const authSlice = createSlice({
             state.email = ""
             state.idToken = ""
             state.localId = ""
-        }
+        } 
     }
 })
 
