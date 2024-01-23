@@ -1,5 +1,4 @@
 
-import { NavigationContainer } from '@react-navigation/native';
 import PricesStack from './PricesStack';
 import UsersStack from './UsersStack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,6 +7,8 @@ import {Entypo} from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
+import ProfileStack from './ProfileStack';
+
 
 const Navigator = () => {
     const Tab = createBottomTabNavigator();
@@ -31,9 +32,8 @@ const Navigator = () => {
 
     const tabBarStyle = isKeyboardOpen ? styles.hiddenTabBar : styles.tabBar;
     return (
-    <NavigationContainer>
+
         <Tab.Navigator
-            // when keyboard is open, tab bar is hidden
             screenOptions={{
                 headerShown: false,
                 tabBarLabel: () => null,
@@ -54,8 +54,13 @@ const Navigator = () => {
                     tabBarIcon: ({focused}) => <MaterialIcons name="attach-money" size={focused ? 24 : 20} color={focused ? "black" : "lightgray"} />
                 }}
                 name="Prices Stack" component={PricesStack} />
+            <Tab.Screen 
+                options={{
+                    tabBarIcon: ({focused}) => <Entypo name="user" size={focused ? 24 : 20} color={focused ? "black" : "lightgray"}  />
+                }}
+                name="Profile Stack" component={ProfileStack} />
         </Tab.Navigator>
-    </NavigationContainer>
+  
     )
 }
 

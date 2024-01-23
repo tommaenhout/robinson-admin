@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 const CustomInputPassword = ({input}) => { 
     const [show, setShow] = useState(false);
+    console.log(input.value)
     return (
         <View>
           <View className="flex justify-center relative bg-white">
@@ -19,7 +20,7 @@ const CustomInputPassword = ({input}) => {
                  <Ionicons onPress={() => setShow(!show)} name={show ? "eye-off" : "eye"} size={24} color="black" />
             </View>
           </View>
-          <Text className="px-2 text-xs text-red-700">{input.error}</Text>
+          {input.error && <Text className="px-2 text-xs text-red-700">{input.error}</Text>}
       </View>
     )
 }
