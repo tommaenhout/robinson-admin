@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 const CustomInputPassword = ({input}) => { 
     const [show, setShow] = useState(false);
-    console.log(input.value)
+  
     return (
         <View>
           <View className="flex justify-center relative bg-white">

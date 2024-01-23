@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 
 const MainNavigator = () => {
    const idToken = useSelector((state) => state.auth.idToken)
-
-   console.log("idToken", idToken) 
    
     return (
         <NavigationContainer>

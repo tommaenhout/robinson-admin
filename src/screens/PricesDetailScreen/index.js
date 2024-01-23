@@ -29,7 +29,6 @@ const PricesDetailScreen = ({ navigation, route }) => {
 
     const editPrice = () => {
         const url = `/prices/${id.$oid}`
-        console.log("api call with id to edit price")
         navigate("Prices")
     }
 
