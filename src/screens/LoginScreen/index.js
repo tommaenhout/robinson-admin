@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { View, Text, Pressable, StyleSheet } from "react-native"
 import { useDispatch } from "react-redux"
 import { setUser } from "../../features/authSlice"
+import { insertSession } from "../../db"
 
 
 const LoginScreen = ({navigation}) => {
@@ -17,11 +18,13 @@ const LoginScreen = ({navigation}) => {
     const onSubmit = () => {
         triggerLogin({email, password})
 
-    }   
+    } 
 
     useEffect(() => {
       if (isSuccess) {
           dispatch(setUser(data))
+          insertSession({localId: data.localId, idToken: data.idToken, email: data.email})
+            .catch(err => console.log(err))
       }
       if (isError) {
           console.log(error)

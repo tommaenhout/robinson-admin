@@ -1,6 +1,6 @@
-import CustomButton from "../CustomButton"
 import Title from "../Title"
-import { View } from "react-native"
+import { Pressable, View , StyleSheet, Text} from "react-native"
+
 
 const PricesCollection = ({prices, title, navigation}) => {
     const {navigate} = navigation
@@ -10,12 +10,38 @@ const PricesCollection = ({prices, title, navigation}) => {
             <View className="mb-3">
                  <Title>{title} </Title>
             </View>
-           
+           <View style={styles.container}>
             {prices.map((price, index) => (
-                <CustomButton  key={index} title={price.type} onPress={() => navigate("Price Edit",{price:price}) } />
+                <Pressable style={styles.pressable} onPress={() => navigate("Price Edit",{price:price})} key={index} ><Text style={styles.text} key={index}>{price.type}</Text></Pressable>
             ))}
+            </View>
         </View>
     )
 }
+
+const styles =  StyleSheet.create({
+    pressable : {
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 30,
+        width: "32%",
+        textAlign: "center",
+        justifyContent: "center",
+        backgroundColor: "lightgrey",
+        borderRadius: 10,
+     
+    },
+    container: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 5,
+    },
+    text : {
+        textAlign: "center",
+    }
+})
 
 export default PricesCollection

@@ -1,30 +1,38 @@
-import React from 'react';
-import { View, Text, Modal } from 'react-native';
-import CustomButton from '../CustomButton';
-import InputPicker from '../InputPicker';
 
 
-const ModalAddAdmin = ({visible,setModalVisible, inputs, addNewAdmin }) => {  
+import CustomButton from "../CustomButton"
+import CustomInput from "../CustomInput"
+import CustomInputPassword from "../CustomInputPassword"
+import { useEffect, useState } from "react"    
+import { View, Text, StyleSheet } from "react-native"
+import { useSignupMutation } from "../../app/services/authServices"
+import { useDispatch } from "react-redux"
+import { signupSchema } from "../../validations/signupSchema"
+import * as Yup from "yup"
+import { usePostAdminsMutation } from "../../app/services/adminServices"
+import { Modal } from "react-native"
+import CreateAdmin from "./CreateAdmin"
+
+
+const ModalAddAdmin = ({visible,setModalVisible }) => {
+
 
     return (
         <Modal visible={visible}>
-            <View>
-                <View>
-                    {inputs && inputs.map((input, index) => (
-                    <InputPicker
-                        key={index}
-                        input={input}
-                        />
-                    ))}
-                </View>
-                <View>
-                    <CustomButton title="Add" onPress={addNewAdmin}/>
-                    <CustomButton title="Close" onPress={() => setModalVisible(false)} />
-                </View>
-            </View>
-        </Modal>
+          <CreateAdmin
+            setModalVisible={setModalVisible}
+            isSignup = {false}
+            navigation= {null}
+          />
+        <CustomButton 
+            title="Close" 
+            onPress={() => setModalVisible(false)} />
+    </Modal>
     )
-
+   
 }
 
-export default ModalAddAdmin;
+
+
+export default ModalAddAdmin
+

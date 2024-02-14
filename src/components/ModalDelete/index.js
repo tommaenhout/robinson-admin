@@ -7,6 +7,7 @@ const ModalDelete = ({student,visible,setModalVisible,onDelete}) =>{
 
     const { firstName, lastName, language, level, id } = student
 
+
     return  <Modal
                 visible={visible}>
                 <View className="h-screen flex justify-end">
@@ -20,7 +21,7 @@ const ModalDelete = ({student,visible,setModalVisible,onDelete}) =>{
                            
                         </View>
                         <View>
-                            <CustomButton title="Confirm" onPress={() => onDelete (student.id)} />
+                            <CustomButton title="Confirm" onPress={() => onDelete (id.$oid)} />
                             <CustomButton title="Close" onPress={()=> setModalVisible(false)}/>
                         </View>
                 </View>

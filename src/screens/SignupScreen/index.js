@@ -1,70 +1,44 @@
-import CustomButton from "../../components/CustomButton"
-import CustomInput from "../../components/CustomInput"
-import CustomInputPassword from "../../components/CustomInputPassword"
+
 import { useEffect, useState } from "react"    
 import { View, Text, Pressable, StyleSheet } from "react-native"
-import { useSignupMutation } from "../../app/services/authServices"
-import { useDispatch } from "react-redux"
-import { setUser } from "../../features/authSlice"
+import CreateAdmin from "../../components/ModalAddAdmin/CreateAdmin"
+import { Keyboard } from "react-native"
 
 
 const SignupScreen = ({navigation}) => {
-    const [triggerSignup, {data,isError, isSuccess, error, isLoading}] = useSignupMutation()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-    const dispatch = useDispatch()
 
-    const onSubmit = () => {
-        triggerSignup({email, password})
-
-    }   
-
+    const [keyboard, setKeyboard] = useState(false)
     useEffect(() => {
-       if (isSuccess) {
-           dispatch(setUser(data))
-       }
+        const keyboardDidShowListener = Keyboard.addListener(
+          'keyboardDidShow',
+          () => {
+            setKeyboard(true)
+          },
+        );
 
-    }, [data, isError, isSuccess])
+        const keyboardDidHideListener = Keyboard.addListener(
+          'keyboardDidHide',
+          () => {
+            setKeyboard(false)
+          },
+        );
+        return () => {
+          keyboardDidShowListener.remove();
+          keyboardDidHideListener.remove();
+        };
+      }, []);
+  
+
+
 
 
     return (
         <View style={styles.container}>
-               <Text style={styles.title}>Sign Up</Text>
             <View style={styles.containerInputs}>
-         
-            <CustomInput 
-                input={{
-                    placeholder: "Email",
-                    value: email,
-                    onChange: ((name, value) => setEmail(value)),
-                    name: "email",
-                    error: ""
-                }}
-            />
-            <CustomInputPassword
-                input={{
-                    placeholder: "Password",
-                    value: password,
-                    onChange: ((name, value) => setPassword(value)),
-                    name: "password",
-                    error: ""
-                }}
-            />
-            <CustomInputPassword 
-                input={{
-                    placeholder: "Confirm Password",
-                    value: confirmPassword,
-                    onChange: ((name, value) => setConfirmPassword(value)),
-                    name: "confirmPassword",
-                    error: ""
-                }}
-            />
-            <CustomButton   
-                title="Sign Up"
-                onPress={onSubmit}
-            />
-            <View style={styles.textContainer} >
+            <CreateAdmin
+                navigation={navigation}
+                isSignup={true}/>
+            <View style={keyboard ? styles.textContainerHidden : styles.textContainer} >
             <Text>Already have an account</Text>
                 <Pressable onPress={() => navigation.navigate("Login")}>
                     <Text className="text-blue-600">Login</Text>
@@ -76,12 +50,10 @@ const SignupScreen = ({navigation}) => {
    
 }
 
-
-
 export default SignupScreen
 
 const styles = StyleSheet.create ({
-    container:  {
+    container:  { 
         flex: 1,
         alignItems: 'center',
     },
@@ -103,5 +75,10 @@ const styles = StyleSheet.create ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    textContainerHidden : {
+        display: 'none'
     }
+
+
 })

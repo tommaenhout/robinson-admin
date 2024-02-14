@@ -14,9 +14,12 @@ export default store = configureStore({
     students : studentsSlice,
     [adminApi.reducerPath] : adminApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, adminApi.middleware),
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }).concat(authApi.middleware, adminApi.middleware),
 })
 
 

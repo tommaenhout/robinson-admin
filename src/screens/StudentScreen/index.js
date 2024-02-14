@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { View} from 'react-native';
 import React, { useState } from 'react';
 import ListStudents from '../../components/ListStudents';
@@ -11,19 +11,26 @@ import ScreenWrapper from '../../components/ScreenWrapper';
 import ListWrapper from '../../components/ListWrapper';
 import { useSelector, useDispatch } from 'react-redux';
 import { setStudents, setFilteredStudents, deleteStudent } from '../../features/studentsSlice';
-
-const studentsArray = require('../../../dummydata-students.json')
+import { useDeleteStudentMutation, useGetStudentsQuery } from '../../app/services/adminServices';
 
  const StudentScreen = () => {
   const [search, setSearch] = useState('')
   const dispatch = useDispatch()
   const students = useSelector((state) => state.students.students)
   const filteredStudents = useSelector((state) => state.students.filteredStudents)
-  /* const [students, setStudents] = useState(studentsArray)
-  const [filteredStudents, setFilteredStudents] = useState(students) */
+  const {data, refetch, status} = useGetStudentsQuery()
+  const [triggerDeleteStudent] = useDeleteStudentMutation()
   const [studentToDelete, setStudentToDelete] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
-  
+
+
+  useEffect(() => {
+    if (status === 'fulfilled') {
+      dispatch(setStudents(data))
+    }
+  }, [status, data])
+
+
 
   function searchStudents(search) {
     dispatch(setFilteredStudents(search))
@@ -36,14 +43,18 @@ const studentsArray = require('../../../dummydata-students.json')
     setModalVisible(true)
   }
 
-  const onDelete = (id) => {
-    dispatch(deleteStudent(id))
-    setStudentToDelete(null)
-    setModalVisible(false)
+  const onDelete =  (id) => {
+      triggerDeleteStudent(id).then((res) => {
+      refetch()
+      setModalVisible(false)
+    }
+    )
   }
-  useEffect (() => {
-    dispatch(setStudents(studentsArray))
+
+  useEffect(() => {
+    refetch()
   }, [])
+
 
   useEffect (() => {
     if (students.length >  0) {
@@ -72,7 +83,7 @@ const studentsArray = require('../../../dummydata-students.json')
       <ListWrapper>
         {students && 
           <ListStudents
-            students={filteredStudents.sort((a, b) => a.lastName.localeCompare(b.lastName))}
+            students={filteredStudents.sort((a, b) => a.lastName?.localeCompare(b.lastName))}
             onModal={onModalHandler}
           />}
       </ListWrapper>

@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import StudentListItem from "./StudentListItem"
 import { FlatList, View } from "react-native"
 

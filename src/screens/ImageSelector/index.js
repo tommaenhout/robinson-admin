@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import AddButton from '../../components/AddButton'
 import * as ImagePicker from 'expo-image-picker';
 import { useGetProfileImageQuery, usePostProfileImageMutation } from '../../app/services/adminServices';
@@ -9,7 +9,7 @@ const ImageSelector = ({navigation}) => {
 
 
     const [image,setImage] = useState()
-    const [triggerPostProfileImage, {isError, error}] = usePostProfileImageMutation()
+    const [triggerPostProfileImage] = usePostProfileImageMutation()
     const localId = useSelector((state) => state.auth.localId)
     const {data,isSuccess } = useGetProfileImageQuery(localId)
 
@@ -41,7 +41,9 @@ const ImageSelector = ({navigation}) => {
 
 
     const confirmImage = () => {
-       triggerPostProfileImage({localId, image})
+       triggerPostProfileImage({localId, image}).then((res) => {
+        console.log(res)
+        })
        navigation.goBack()
     }
   return (

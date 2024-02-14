@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import Title from '../../components/Title';
 import { KeyboardAvoidingView, Text, View } from 'react-native';
@@ -6,10 +6,15 @@ import InputPicker from '../../components/InputPicker';
 import CustomButton from '../../components/CustomButton';
 import { useState } from 'react';
 import { inputTypes } from '../../constants/inputTypes';
+import { useEditPriceMutation, useGetPricesQuery } from '../../app/services/adminServices';
+import { convertToUnderScore } from '../../utils/helperFunctions';
+
 
 const PricesDetailScreen = ({ navigation, route }) => {
+    const [triggerEditPrice, {isError, error, status}] = useEditPriceMutation()
+    const { refetch} = useGetPricesQuery()
     const { price } = route.params
-    const {id, isGroup, type, hours_per_week, classes_per_week, duration, price : prices} = price
+    const {isGroup, type, hours_per_week, classes_per_week, duration, price : prices} = price
     const {one_month, three_months, one_month_usd, three_months_usd} = prices
     const {navigate} = navigation   
 
@@ -27,9 +32,17 @@ const PricesDetailScreen = ({ navigation, route }) => {
         })
     }
 
-    const editPrice = () => {
-        const url = `/prices/${id.$oid}`
-        navigate("Prices")
+   const editPrice = () => {
+        const typeToSend = isGroup ? `${type}_group` : type
+        const newPrice = {
+            ...price,
+            price : pricesToEdit
+        }
+   
+        triggerEditPrice({type : convertToUnderScore(typeToSend.toLowerCase()), price : newPrice}).then(() => {
+            refetch()
+            navigate("Prices")
+        })
     }
 
     const inputs = [
@@ -86,7 +99,6 @@ const PricesDetailScreen = ({ navigation, route }) => {
                 </View>
             </KeyboardAvoidingView>
             <View className="p-2">
-                <Text>Price ID: {id.$oid}</Text>
                 <Text>Hours per week: {hours_per_week}</Text>
                 <Text>Classes per week: {classes_per_week}</Text>
                 <Text>Duration: {duration}</Text>

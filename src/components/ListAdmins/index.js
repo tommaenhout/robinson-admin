@@ -1,7 +1,6 @@
-import { useEffect } from "react"
 import AdminListItem from "./AdminListItem"
-import { FlatList, View } from "react-native"
-import CustomButton from "../CustomButton"
+import { FlatList } from "react-native"
+
 import { useSelector } from "react-redux"
 
 

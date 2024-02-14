@@ -8,7 +8,6 @@ const MyProfileScreen = ({navigation}) => {
     const localId = useSelector((state) => state.auth.localId)
     const {data} = useGetProfileImageQuery(localId)
 
-    
 
     return (
         <View style={styles.container}>

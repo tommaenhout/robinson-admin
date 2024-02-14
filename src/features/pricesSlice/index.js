@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const priceSlice = createSlice({
   name: 'prices',
   initialState: {
-    prices: [],
+    prices: {},
     pricesIndividual : [],
     pricesGroup : []
   },
@@ -12,10 +12,18 @@ export const priceSlice = createSlice({
       state.prices = action.payload
     },
     setPricesIndividual: (state) => {
-      state.pricesIndividual = state.prices.filter(price => price.isGroup === false)
+      state.pricesIndividual = [
+        state.prices.starter,
+        state.prices.semi_pro,
+        state.prices.pro
+      ]
     },
     setPricesGroup: (state) => {
-      state.pricesGroup = state.prices.filter(price => price.isGroup === true)
+      state.pricesGroup = [
+        state.prices.starter_group,
+        state.prices.semi_pro_group,
+        state.prices.pro_group
+      ]
     },
   },
 })

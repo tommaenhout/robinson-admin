@@ -6,8 +6,14 @@ import { StatusBar } from 'expo-status-bar';
 import store from './src/app/store';
 import { Provider } from 'react-redux'
 import MainNavigator from './src/components/Navigator/MainNavigator';
+import { init } from './src/db';
 
-
+init().then(() => {
+  console.log('Initialized database');
+}).catch(err => {
+  console.log('Initializing db failed.');
+  console.log(err);
+});
 
  const App = () => {
   const [loaded] = useFonts({
@@ -24,6 +30,8 @@ import MainNavigator from './src/components/Navigator/MainNavigator';
     'Roboto-BlackItalic': require('./assets/fonts/Roboto-BlackItalic.ttf'),
     'Rubik-Bubbles': require('./assets/fonts/RubikBubbles-Regular.ttf'),
   });
+
+  
 
   if (!loaded) return null;
 
